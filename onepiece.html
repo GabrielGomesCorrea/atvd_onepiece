@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Piece</title>
+</head>
+<body>
+    <h1>One piece</h1>
+    Em qual episódio deseja começar: <input type="number" id="input_ep"><br><br>
+    Quanto tempo disponível você tem para assitir: <input type="number" id="input_tempo">
+    <select name="" id="input_medida">
+        <option value="" disabled selected>Selecione a medida de tempo</option>
+        <option value="Minutos">Minutos</option>
+        <option value="Horas">Horas</option>
+    </select><br><br>
+    Deseja pular a abertura do episódio:
+    <select name="" id="input_abt">
+        <option value="" disabled selected>Selecione</option>
+        <option value="sim">Sim</option>
+        <option value="não">Não</option>
+    </select><br><br>
+    Deseja pular o encerramento do episódio:
+    <select name="" id="input_enc">
+        <option value="" disabled selected>Selecione</option>
+        <option value="sim">Sim</option>
+        <option value="não">Não</option>
+    </select><br><br>
+    <button onclick="assistir()">Assistir Episódio</button><br><br>
+    <div id="div_msg"></div>
+</body>
+</html>
+<script>
+    function assistir(){
+        var ep = Number(input_ep.value);
+        var tempo = Number(input_tempo.value);
+        var medida = input_medida.value;
+        var abt = input_abt.value;
+        var enc = input_enc.value;
+
+        if(medida == "Horas"){
+            medida = medida * 60;
+        }
+        var tempep = 0;
+        if(abt == "Sim" || enc == "Sim"){
+            tempep+=22;
+        }else if(abt == "Sim"){
+            tempep+=22;
+        }else if(enc == "Sim"){
+            tempep+=22;
+        }else{
+            tempep+=24;
+        }
+
+        if(ep >= 1 || ep <= 1100){
+            div_msg.innerHTML += `Episódio: ${ep}<br>`;
+            
+            for(var index; index <= tempo; index++){
+                div_msg.innerHTML += `Minuto ${index}: Assistindo o episódio<br>`;
+            }
+        }else{
+            alert('O número do episódio é inválido');
+        }
+    }
+</script>
