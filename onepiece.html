@@ -6,60 +6,78 @@
     <title>One Piece</title>
 </head>
 <body>
-    <h1>One piece</h1>
-    Em qual episódio deseja começar: <input type="number" id="input_ep"><br><br>
-    Quanto tempo disponível você tem para assitir: <input type="number" id="input_tempo">
-    <select name="" id="input_medida">
-        <option value="" disabled selected>Selecione a medida de tempo</option>
-        <option value="Minutos">Minutos</option>
-        <option value="Horas">Horas</option>
+    <h2>One Piece</h2>
+
+    Episódio que deseja começar assistindo: <input type="text" id="inpt_ep"><br><br>
+    Quantidade de tempo disponível: <input type="text" id="inpt_tempo">
+    <select name="unidade" id="select_medida">
+        <option selected disabled value="#">Selecione a medida de tempo</option>
+        <option value="horas">Horas</option>
+        <option value="minutos">Minutos</option>
     </select><br><br>
-    Deseja pular a abertura do episódio:
-    <select name="" id="input_abt">
-        <option value="" disabled selected>Selecione</option>
+    Você quer pular a abertura: <select name="unidade" id="select_abertura">
+        <option selected disabled value="#">Selecione uma opção</option>
         <option value="sim">Sim</option>
-        <option value="não">Não</option>
+        <option value="nao">Não</option>
     </select><br><br>
-    Deseja pular o encerramento do episódio:
-    <select name="" id="input_enc">
-        <option value="" disabled selected>Selecione</option>
-        <option value="sim">Sim</option>
-        <option value="não">Não</option>
+    Você quer pular o encerramento: <select name="unidade" id="select_encerramento">
+        <option selected disabled value="#">Selecione uma opção</option>
+        <option value="simenc">Sim</option>
+        <option value="naoenc">Não</option>
     </select><br><br>
-    <button onclick="assistir()">Assistir Episódio</button><br><br>
+    
+    <button onclick="assistir()">Assistir episódios</button> <br><br>
     <div id="div_msg"></div>
 </body>
-</html>
 <script>
     function assistir(){
-        var ep = Number(input_ep.value);
-        var tempo = Number(input_tempo.value);
-        var medida = input_medida.value;
-        var abt = input_abt.value;
-        var enc = input_enc.value;
-
-        if(medida == "Horas"){
-            medida = medida * 60;
+        var ep = Number(inpt_ep.value);
+        var tempo = Number(inpt_tempo.value);
+        var medida = select_medida.value;
+        if (ep < 1 || ep > 1100) {
+            alert (`O número do episódio é invalido`)
         }
-        var tempep = 0;
-        if(abt == "Sim" || enc == "Sim"){
-            tempep+=22;
-        }else if(abt == "Sim"){
-            tempep+=22;
-        }else if(enc == "Sim"){
-            tempep+=22;
-        }else{
-            tempep+=24;
+        if (medida == "horas"){
+            tempo = tempo * 60;
         }
-
-        if(ep >= 1 || ep <= 1100){
-            div_msg.innerHTML += `Episódio: ${ep}<br>`;
+        
+        var abt = select_abertura.value;
+        var enc = select_encerramento.value;
+        var ep_tempo = 20;
+        if (abt == "nao") {
+            ep_tempo = ep_tempo + 2;
+        }
+        if (enc == "naoenc") {
+            ep_tempo = ep_tempo + 2;
+        }
             
-            for(var index; index <= tempo; index++){
-                div_msg.innerHTML += `Minuto ${index}: Assistindo o episódio<br>`;
+        var index = 1;  
+        var minuto = 1;     
+        div_msg.innerHTML = ``;
+        if (ep >= 1 && ep <= 1100) {
+            for (; index <= tempo; index = index + ep_tempo) {
+                div_msg.innerHTML += (`<br>Episódio: ${ep}<br>`);
+                    for (var contagem = 1; contagem <= ep_tempo; contagem++) {
+                        if (abt == "nao" && contagem < 3){
+                            div_msg.innerHTML += (`Minuto ${contagem}: Assistindo a Abertura <br>`);
+                        } else if (enc == "naoenc" && contagem > 22){ 
+                            div_msg.innerHTML += (`Minuto ${contagem}: Assistindo o Encerramento <br>`);
+                        } else if (enc == "naoenc" && contagem <= 22 && abt == "nao" && contagem>= 3){ 
+                            div_msg.innerHTML += (`Minuto ${contagem}: Assistindo o Episódio <br>`);
+                        } else if(abt == "sim" && enc == "naoenc" && contagem > 20){
+                            div_msg.innerHTML += (`Minuto ${contagem}: Assistindo o Encerramento <br>`);
+                        } else {
+                            div_msg.innerHTML += (`Minuto ${contagem}: Assistindo o Episódio <br>`);
+                        }
+                        minuto++;
+                        if ((index + contagem) > tempo){
+                            break;
+                        }
+                    }
+            ep++;
             }
-        }else{
-            alert('O número do episódio é inválido');
+        div_msg.innerHTML += (`<br>Fim dos episódios!<br> Você assistiu ${minuto/ep_tempo} episódios<br>`);     
         }
     }
 </script>
+</html>
