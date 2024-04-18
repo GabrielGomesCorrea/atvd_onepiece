@@ -7,9 +7,8 @@
 </head>
 <body>
     <h2>One Piece</h2>
-
-    Episódio que deseja começar assistindo: <input type="text" id="inpt_ep"><br><br>
-    Quantidade de tempo disponível: <input type="text" id="inpt_tempo">
+    Episódio que deseja começar assistindo: <input type="text" id="input_ep"><br><br>
+    Quantidade de tempo disponível: <input type="text" id="input_tempo">
     <select name="unidade" id="select_medida">
         <option selected disabled value="#">Selecione a medida de tempo</option>
         <option value="horas">Horas</option>
@@ -17,13 +16,13 @@
     </select><br><br>
     Você quer pular a abertura: <select name="unidade" id="select_abertura">
         <option selected disabled value="#">Selecione uma opção</option>
-        <option value="sim">Sim</option>
-        <option value="nao">Não</option>
+        <option value="sim">Sim, eu quero</option>
+        <option value="nao">Não, eu não quero</option>
     </select><br><br>
     Você quer pular o encerramento: <select name="unidade" id="select_encerramento">
         <option selected disabled value="#">Selecione uma opção</option>
-        <option value="simenc">Sim</option>
-        <option value="naoenc">Não</option>
+        <option value="simenc">Sim, eu quero</option>
+        <option value="naoenc">Não, eu não quero</option>
     </select><br><br>
     
     <button onclick="assistir()">Assistir episódios</button> <br><br>
@@ -31,8 +30,8 @@
 </body>
 <script>
     function assistir(){
-        var ep = Number(inpt_ep.value);
-        var tempo = Number(inpt_tempo.value);
+        var ep = Number(input_ep.value);
+        var tempo = Number(input_tempo.value);
         var medida = select_medida.value;
         if (ep < 1 || ep > 1100) {
             alert (`O número do episódio é invalido`)
